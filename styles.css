@@ -1,13 +1,43 @@
-/* --- 1. Réinitialisation et Polices --- */
+/* --- 1. Variables de Couleur et Polices (Themes) --- */
+
+/* COULEURS FOURNIES PAR L'UTILISATEUR */
+/* 1B1725 : Gris très foncé/Noir (Base sombre) */
+/* 534B62 : Gris-violet moyen (Accents et Primaire sombre) */
+/* A499B3 : Gris-violet clair (Texte clair et Secondaire clair) */
+
 :root {
-    --color-primary: #1e40af; /* Nouveau Bleu Principal (foncé et profond) */
-    --color-secondary: #1d3a8a; /* Nouveau Bleu foncé (pour les actions/hover) */
-    --color-dark: #1f2937; /* Bleu très foncé/Presque noir (texte/barre de navigation) */
-    --color-light: #f3f4f6; /* Gris très clair (fond alterné) */
-    --color-white: #ffffff; /* Blanc */
+    /* Variables de base */
     --font-family: 'Roboto', sans-serif;
     --transition-duration: 0.3s;
 }
+
+/* ------------------------------------- */
+/* A. MODE FONCÉ (DARK MODE - Par défaut) */
+/* ------------------------------------- */
+html[data-theme="dark"] {
+    --color-bg-main: #1B1725;        /* Fond principal très foncé */
+    --color-bg-secondary: #1f1a2e;   /* Fond alterné */
+    --color-text-primary: #A499B3;    /* Texte clair */
+    --color-text-secondary: #534B62; /* Texte secondaire/Accents doux */
+    --color-accent-primary: #A499B3;  /* Couleur des liens/CTA (clair pour contraste) */
+    --color-accent-hover: #ffffff;   /* Survol */
+    --color-shadow: rgba(255, 255, 255, 0.1);
+}
+
+/* ------------------------------------- */
+/* B. MODE CLAIR (LIGHT MODE) */
+/* ------------------------------------- */
+html[data-theme="light"] {
+    --color-bg-main: #ffffff;        /* Fond principal blanc */
+    --color-bg-secondary: #f3f4f6;   /* Fond alterné très clair */
+    --color-text-primary: #1B1725;    /* Texte foncé */
+    --color-text-secondary: #534B62; /* Texte secondaire/Accents doux */
+    --color-accent-primary: #534B62;  /* Couleur des liens/CTA (foncé pour contraste) */
+    --color-accent-hover: #1B1725;   /* Survol */
+    --color-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* --- 2. Styles Généraux (Appliqués à tous les thèmes) --- */
 
 * {
     margin: 0;
@@ -18,32 +48,33 @@
 body {
     font-family: var(--font-family);
     line-height: 1.6;
-    color: var(--color-dark);
-    background-color: var(--color-white);
+    color: var(--color-text-primary); /* Utilisation de la variable du thème */
+    background-color: var(--color-bg-main); /* Utilisation de la variable du thème */
+    transition: background-color var(--transition-duration), color var(--transition-duration);
 }
 
 a {
     text-decoration: none;
-    color: var(--color-primary);
+    color: var(--color-accent-primary);
     transition: color var(--transition-duration);
 }
 
 a:hover {
-    color: var(--color-secondary);
+    color: var(--color-accent-hover);
 }
 
-/* --- 2. Barre de Navigation (Header) --- */
+/* --- 3. Barre de Navigation (Header) --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 5%;
-    background-color: var(--color-dark); /* Barre très sombre pour le contraste */
-    color: var(--color-white);
+    background-color: var(--color-bg-main); 
+    color: var(--color-text-primary);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px var(--color-shadow);
 }
 
 .logo {
@@ -54,6 +85,7 @@ a:hover {
 .navbar nav ul {
     list-style: none;
     display: flex;
+    align-items: center; /* Pour aligner le bouton de thème */
 }
 
 .navbar nav ul li {
@@ -61,14 +93,30 @@ a:hover {
 }
 
 .navbar nav ul li a {
-    color: var(--color-white);
+    color: var(--color-text-primary);
     padding: 5px 0;
     position: relative;
     transition: opacity var(--transition-duration);
 }
 
 .navbar nav ul li a:hover {
-    opacity: 0.8;
+    color: var(--color-accent-primary); /* Couleur accentuée au survol */
+}
+
+/* Bouton de Thème */
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--color-accent-primary);
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 5px;
+    transition: color var(--transition-duration);
+}
+
+#theme-toggle:hover {
+    color: var(--color-accent-hover);
 }
 
 /* Animation subtile pour le lien actif */
@@ -77,14 +125,14 @@ a:hover {
     display: block;
     width: 100%;
     height: 3px;
-    background: var(--color-primary);
+    background: var(--color-accent-primary);
     position: absolute;
     bottom: -5px;
     left: 0;
     transition: width var(--transition-duration) ease-out;
 }
 
-/* --- 3. Sections de Contenu Général --- */
+/* --- 4. Sections de Contenu Général --- */
 .content-section {
     padding: 80px 5%;
     max-width: 1200px;
@@ -92,14 +140,14 @@ a:hover {
 }
 
 .alternate-bg {
-    background-color: var(--color-light);
+    background-color: var(--color-bg-secondary); /* Fond alterné */
 }
 
 h2 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: var(--color-dark); /* Changé à dark pour plus de sobriété sur les titres */
-    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-accent-primary); 
+    border-bottom: 2px solid var(--color-accent-primary);
     display: inline-block;
     padding-bottom: 5px;
 }
@@ -107,20 +155,20 @@ h2 {
 .section-intro {
     font-size: 1.1em;
     margin-bottom: 40px;
-    color: #555;
+    color: var(--color-text-secondary);
 }
 
-/* --- 4. Section Hero (Accueil) --- */
+/* --- 5. Section Hero (Accueil) --- */
 .hero-section {
-    /* Dégradé de bleu plus foncé et sérieux */
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    color: var(--color-white);
+    /* Dégradé de vos couleurs sombres/accentuées pour un effet dramatique */
+    background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-text-secondary) 100%); 
+    color: var(--color-white); /* Le texte dans le hero doit rester blanc */
     height: 80vh; 
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--color-shadow);
 }
 
 .hero-content {
@@ -131,6 +179,7 @@ h2 {
     font-size: 3.5em;
     margin-bottom: 15px;
     font-weight: 700;
+    color: var(--color-accent-primary); /* Accentue le titre */
 }
 
 .subtitle {
@@ -162,7 +211,7 @@ h2 {
 }
 
 
-/* --- 5. Boutons (CTA) --- */
+/* --- 6. Boutons (CTA) --- */
 .cta-button, .download-button, .contact-button {
     display: inline-block;
     padding: 12px 25px;
@@ -177,49 +226,49 @@ h2 {
 
 .cta-button {
     background-color: var(--color-white);
-    color: var(--color-primary);
-    box-shadow: 0 4px var(--color-secondary);
+    color: var(--color-text-primary);
+    box-shadow: 0 0 0 var(--color-text-secondary); /* Ombre de la couleur secondaire */
 }
 
 .cta-button:hover {
     background-color: var(--color-light);
     transform: translateY(-2px); /* Effet de levée */
-    box-shadow: 0 6px var(--color-secondary);
+    box-shadow: 0 6px var(--color-text-secondary);
 }
 
 .download-button {
-    background-color: var(--color-primary);
-    color: var(--color-white);
+    background-color: var(--color-accent-primary);
+    color: var(--color-bg-main);
     margin-top: 20px;
 }
 
 .download-button:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--color-text-secondary);
     transform: scale(1.05); /* Effet d'agrandissement subtil */
 }
 
 .contact-button {
-    background-color: var(--color-primary);
-    color: var(--color-white);
+    background-color: var(--color-accent-primary);
+    color: var(--color-bg-main);
     padding: 10px 20px;
 }
 
 .contact-button.secondary {
     background-color: transparent;
-    border: 2px solid var(--color-primary);
-    color: var(--color-primary);
+    border: 2px solid var(--color-accent-primary);
+    color: var(--color-accent-primary);
 }
 
 .contact-button.secondary:hover {
-    background-color: var(--color-primary);
-    color: var(--color-white);
+    background-color: var(--color-accent-primary);
+    color: var(--color-bg-main);
 }
 
 .contact-links {
     margin-top: 30px;
 }
 
-/* --- 6. Mise en Page Spécifique (CV & Portfolio) --- */
+/* --- 7. Mise en Page Spécifique (CV & Portfolio) --- */
 /* CV Grid */
 .cv-grid {
     display: grid;
@@ -229,16 +278,16 @@ h2 {
 }
 
 .cv-card {
-    background-color: var(--color-white);
-    border: 1px solid #ddd;
+    background-color: var(--color-bg-secondary); /* Couleur alternée */
+    border: 1px solid var(--color-text-secondary);
     padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 5px var(--color-shadow);
 }
 
 .cv-card h3 {
-    color: var(--color-dark);
-    border-bottom: 2px solid var(--color-light);
+    color: var(--color-accent-primary);
+    border-bottom: 2px solid var(--color-text-secondary);
     padding-bottom: 10px;
     margin-bottom: 15px;
 }
@@ -256,10 +305,10 @@ h2 {
 }
 
 .project-card {
-    background-color: var(--color-white);
+    background-color: var(--color-bg-main);
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--color-shadow);
     transition: transform var(--transition-duration), box-shadow var(--transition-duration);
 }
 
@@ -270,7 +319,7 @@ h2 {
 }
 
 .project-card h3 {
-    color: var(--color-dark);
+    color: var(--color-accent-primary);
     margin: 15px 15px 5px 15px;
     font-size: 1.4em;
     border: none;
@@ -278,34 +327,34 @@ h2 {
 
 .project-card p {
     padding: 0 15px 15px 15px;
-    color: #555;
+    color: var(--color-text-secondary);
 }
 
 .project-card a {
     display: block;
     text-align: center;
-    background-color: var(--color-light);
+    background-color: var(--color-bg-secondary);
     padding: 10px;
     font-weight: 700;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--color-text-secondary);
 }
 
 /* Animation d'élévation au survol */
 .hover-lift:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px var(--color-shadow);
 }
 
-/* --- 7. Footer --- */
+/* --- 8. Footer --- */
 footer {
     text-align: center;
     padding: 20px;
-    background-color: var(--color-dark);
-    color: var(--color-white);
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-main);
     font-size: 0.9em;
 }
 
-/* --- 8. Animation d'Apparition au Scroll (Fade-In) --- */
+/* --- 9. Animation d'Apparition au Scroll (Fade-In) --- */
 .fade-in {
     opacity: 0;
     transform: translateY(20px);
@@ -317,20 +366,22 @@ footer {
     transform: translateY(0);
 }
 
-/* --- 9. Responsive Design --- */
+/* --- 10. Responsive Design --- */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
         text-align: center;
         padding: 15px 5%;
     }
-
+    /* Maintien du bouton de thème à droite si possible ou sur une nouvelle ligne */
     .navbar nav ul {
         margin-top: 10px;
+        flex-wrap: wrap; 
+        justify-content: center;
     }
 
     .navbar nav ul li {
-        margin: 0 10px;
+        margin: 0 10px 5px 10px;
     }
 
     .hero-section {
