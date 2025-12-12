@@ -1,414 +1,472 @@
-/* --- 1. Variables de Couleur et Polices (Themes) --- */
-
-/* COULEURS FOURNIES PAR L'UTILISATEUR */
-/* 1B1725 : Gris très foncé/Noir (Base sombre) */
-/* 534B62 : Gris-violet moyen (Accents et Primaire sombre) */
-/* A499B3 : Gris-violet clair (Texte clair et Secondaire clair) */
-
+/* --- VARIABLES CSS & PALETTE DE COULEURS --- */
 :root {
-    /* Variables de base */
-    --font-family: 'Roboto', sans-serif;
-    --transition-duration: 0.3s;
+    /* Couleurs extraites de l'image */
+    --color-shadow-grey: #1B1725;
+    --color-vintage-grape: #534B62;
+    --color-lilac-ash: #A499B3;
+
+    --white: #ffffff;
+    --off-white: #f8f9fa;
+    --black: #0a0a0a;
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ------------------------------------- */
-/* A. MODE FONCÉ (DARK MODE - Par défaut) */
-/* ------------------------------------- */
-html[data-theme="dark"] {
-    --color-bg-main: #1B1725;        /* Fond principal très foncé */
-    --color-bg-secondary: #1f1a2e;   /* Fond alterné */
-    --color-text-primary: #A499B3;    /* Texte clair */
-    --color-text-secondary: #534B62; /* Texte secondaire/Accents doux */
-    --color-accent-primary: #A499B3;  /* Couleur des liens/CTA (clair pour contraste) */
-    --color-accent-hover: #ffffff;   /* Survol */
-    --color-shadow: rgba(255, 255, 255, 0.1);
+/* Thème Sombre (Défaut) */
+[data-theme="dark"] {
+    --bg-main: var(--color-shadow-grey);
+    --bg-alt: #231f30; /* Légèrement plus clair que le fond principal */
+    --bg-card: var(--color-vintage-grape);
+    --text-primary: var(--color-lilac-ash);
+    --text-secondary: #d1c7e0;
+    --accent: var(--color-lilac-ash);
+    --accent-hover: #c4bbd3;
+    --border-color: rgba(164, 153, 179, 0.2);
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* ------------------------------------- */
-/* B. MODE CLAIR (LIGHT MODE) */
-/* ------------------------------------- */
-html[data-theme="light"] {
-    --color-bg-main: #ffffff;        /* Fond principal blanc */
-    --color-bg-secondary: #f3f4f6;   /* Fond alterné très clair */
-    --color-text-primary: #1B1725;    /* Texte foncé */
-    --color-text-secondary: #534B62; /* Texte secondaire/Accents doux */
-    --color-accent-primary: #534B62;  /* Couleur des liens/CTA (foncé pour contraste) */
-    --color-accent-hover: #1B1725;   /* Survol */
-    --color-shadow: rgba(0, 0, 0, 0.1);
+/* Thème Clair (Inversion sobre) */
+[data-theme="light"] {
+    --bg-main: var(--off-white);
+    --bg-alt: #ece9f2;
+    --bg-card: var(--white);
+    --text-primary: var(--color-shadow-grey);
+    --text-secondary: var(--color-vintage-grape);
+    --accent: var(--color-vintage-grape);
+    --accent-hover: var(--color-shadow-grey);
+    --border-color: rgba(83, 75, 98, 0.15);
+    --shadow: 0 4px 20px rgba(27, 23, 37, 0.08);
 }
 
-/* --- 2. Styles Généraux (Appliqués à tous les thèmes) --- */
-
+/* --- RESET ET BASE --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: var(--font-family);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
     line-height: 1.6;
-    color: var(--color-text-primary); /* Utilisation de la variable du thème */
-    background-color: var(--color-bg-main); /* Utilisation de la variable du thème */
-    transition: background-color var(--transition-duration), color var(--transition-duration);
+    /* Transition douce lors du changement de thème */
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 a {
     text-decoration: none;
-    color: var(--color-accent-primary);
-    transition: color var(--transition-duration);
+    color: inherit;
+    transition: var(--transition-smooth);
 }
 
-a:hover {
-    color: var(--color-accent-hover);
-}
-
-/* --- 3. Barre de Navigation (Header) --- */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    background-color: var(--color-bg-main); 
-    color: var(--color-text-primary);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px var(--color-shadow);
-}
-
-.logo {
-    font-size: 1.5em;
-    font-weight: 700;
-}
-
-.navbar nav ul {
+ul {
     list-style: none;
-    display: flex;
-    align-items: center; /* Pour aligner le bouton de thème */
 }
 
-.navbar nav ul li {
-    margin-left: 30px;
-}
-
-.navbar nav ul li a {
-    color: var(--color-text-primary);
-    padding: 5px 0;
-    position: relative;
-    transition: opacity var(--transition-duration);
-}
-
-.navbar nav ul li a:hover {
-    color: var(--color-accent-primary); /* Couleur accentuée au survol */
-}
-
-/* Bouton de Thème */
-#theme-toggle {
-    background: none;
-    border: none;
-    color: var(--color-accent-primary);
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-left: 10px;
-    padding: 5px;
-    transition: color var(--transition-duration);
-}
-
-#theme-toggle:hover {
-    color: var(--color-accent-hover);
-}
-
-/* Animation subtile pour le lien actif */
-.navbar nav ul li a.active::after {
-    content: '';
+img {
+    max-width: 100%;
     display: block;
-    width: 100%;
-    height: 3px;
-    background: var(--color-accent-primary);
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    transition: width var(--transition-duration) ease-out;
 }
 
-/* --- 4. Sections de Contenu Général --- */
-.content-section {
-    padding: 80px 5%;
+/* --- UTILITAIRES --- */
+.container {
+    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.alternate-bg {
-    background-color: var(--color-bg-secondary); /* Fond alterné */
+.section-padding {
+    padding: 80px 0;
 }
 
-h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: var(--color-accent-primary); 
-    border-bottom: 2px solid var(--color-accent-primary);
-    display: inline-block;
-    padding-bottom: 5px;
-}
-
-.section-intro {
-    font-size: 1.1em;
-    margin-bottom: 40px;
-    color: var(--color-text-secondary);
-}
-
-/* --- 5. Section Hero (Accueil) --- */
-.hero-section {
-    /* Dégradé de vos couleurs sombres/accentuées pour un effet dramatique */
-    background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-text-secondary) 100%); 
-    color: var(--color-white); /* Le texte dans le hero doit rester blanc */
-    height: 80vh; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.text-center {
     text-align: center;
-    box-shadow: 0 4px 8px var(--color-shadow);
 }
 
-.hero-content {
-    max-width: 800px;
+.text-accent {
+    color: var(--accent);
 }
 
-.hero-section h1 {
-    font-size: 3.5em;
-    margin-bottom: 15px;
-    font-weight: 700;
-    color: var(--color-accent-primary); /* Accentue le titre */
-}
-
-.subtitle {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    font-weight: 300;
-}
-
-.description {
-    font-size: 1.1em;
-    margin-bottom: 30px;
-    opacity: 0.9;
-}
-
-/* Animation du texte de titre (subtile) */
-.animated-text {
-    animation: fadeInDown 1s ease-out;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* --- 6. Boutons (CTA) --- */
-.cta-button, .download-button, .contact-button {
-    display: inline-block;
-    padding: 12px 25px;
-    margin: 10px;
-    border-radius: 5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: background-color var(--transition-duration), transform var(--transition-duration);
-    cursor: pointer;
-    border: none;
-}
-
-.cta-button {
-    background-color: var(--color-white);
-    color: var(--color-text-primary);
-    box-shadow: 0 0 0 var(--color-text-secondary); /* Ombre de la couleur secondaire */
-}
-
-.cta-button:hover {
-    background-color: var(--color-light);
-    transform: translateY(-2px); /* Effet de levée */
-    box-shadow: 0 6px var(--color-text-secondary);
-}
-
-.download-button {
-    background-color: var(--color-accent-primary);
-    color: var(--color-bg-main);
-    margin-top: 20px;
-}
-
-.download-button:hover {
-    background-color: var(--color-text-secondary);
-    transform: scale(1.05); /* Effet d'agrandissement subtil */
-}
-
-.contact-button {
-    background-color: var(--color-accent-primary);
-    color: var(--color-bg-main);
-    padding: 10px 20px;
-}
-
-.contact-button.secondary {
-    background-color: transparent;
-    border: 2px solid var(--color-accent-primary);
-    color: var(--color-accent-primary);
-}
-
-.contact-button.secondary:hover {
-    background-color: var(--color-accent-primary);
-    color: var(--color-bg-main);
-}
-
-.contact-links {
-    margin-top: 30px;
-}
-
-/* --- 7. Mise en Page Spécifique (CV & Portfolio) --- */
-/* CV Grid */
-.cv-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+.section-title {
+    font-size: 2rem;
     margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
 }
 
-.cv-card {
-    background-color: var(--color-bg-secondary); /* Couleur alternée */
-    border: 1px solid var(--color-text-secondary);
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px var(--color-shadow);
+/* Petite ligne décorative sous les titres */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent);
+    transition: var(--transition-smooth);
+}
+.text-center .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.cv-card h3 {
-    color: var(--color-accent-primary);
-    border-bottom: 2px solid var(--color-text-secondary);
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+/* --- COMPOSANTS --- */
+
+/* Boutons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    cursor: pointer;
 }
 
-.cv-card ul {
-    list-style: disc;
+.btn-primary {
+    background-color: var(--accent);
+    color: var(--bg-main);
+}
+/* Inversion spécifique pour le contraste du bouton primaire */
+[data-theme="dark"] .btn-primary { color: var(--color-shadow-grey); }
+[data-theme="light"] .btn-primary { color: var(--white); }
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 2px solid var(--accent);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent);
+    color: var(--bg-main);
+    transform: translateY(-3px);
+}
+
+/* --- HEADER --- */
+.header {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(var(--bg-main), 0.95); /* Semi-transparent */
+    backdrop-filter: blur(10px); /* Effet de flou professionnel */
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-secondary);
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent);
+}
+
+/* Animation de soulignement au survol */
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover::before, .nav-link.active::before {
+    width: 100%;
+}
+
+.nav-link.button-outline {
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+.nav-link.button-outline::before { display: none; }
+.nav-link.button-outline:hover {
+    border-color: var(--accent);
+    background-color: rgba(var(--accent), 0.1);
+}
+
+/* Switch de thème */
+.theme-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
     margin-left: 20px;
 }
 
-/* Portfolio Grid */
-.portfolio-grid {
+.theme-btn:hover {
+    color: var(--accent);
+    transform: rotate(15deg);
+}
+
+/* Logique d'affichage des icônes */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+[data-theme="light"] .sun-icon { display: none; }
+[data-theme="light"] .moon-icon { display: block; }
+
+
+/* --- SECTIONS --- */
+
+/* Hero Section */
+.hero-section {
+    padding: 100px 0;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
 }
 
-.project-card {
-    background-color: var(--color-bg-main);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px var(--color-shadow);
-    transition: transform var(--transition-duration), box-shadow var(--transition-duration);
+.title-large {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 10px;
 }
 
-.project-card img {
+.title-medium {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin-bottom: 40px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.hero-image-container {
+    position: relative;
+}
+
+/* Cadre décoratif derrière l'image */
+.hero-image-container::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--accent);
+    z-index: -1;
+    transition: var(--transition-smooth);
+    border-radius: 12px;
+}
+
+.hero-image {
     width: 100%;
     height: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    object-fit: cover;
+    transition: var(--transition-smooth);
+}
+
+.hero-image-container:hover .hero-image {
+    transform: translate(-10px, -10px);
+}
+.hero-image-container:hover::before {
+    transform: translate(10px, 10px);
+}
+
+/* About Section */
+.about-content {
+    max-width: 800px;
+}
+.about-content p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* Categories Section */
+.section-bg-alt {
+    background-color: var(--bg-alt);
+    transition: background-color 0.5s ease;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.card-category {
+    background-color: var(--bg-card);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
     display: block;
+    transition: var(--transition-smooth);
 }
 
-.project-card h3 {
-    color: var(--color-accent-primary);
-    margin: 15px 15px 5px 15px;
-    font-size: 1.4em;
-    border: none;
+.card-category:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent);
 }
 
-.project-card p {
-    padding: 0 15px 15px 15px;
-    color: var(--color-text-secondary);
+.card-icon {
+    font-size: 3rem;
+    color: var(--accent);
+    margin-bottom: 20px;
 }
 
-.project-card a {
-    display: block;
-    text-align: center;
-    background-color: var(--color-bg-secondary);
-    padding: 10px;
-    font-weight: 700;
-    border-top: 1px solid var(--color-text-secondary);
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
 }
 
-/* Animation d'élévation au survol */
-.hover-lift:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px var(--color-shadow);
+.card-category p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
 }
 
-/* --- 8. Footer --- */
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: var(--color-text-primary);
-    color: var(--color-bg-main);
-    font-size: 0.9em;
+.card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-weight: 600;
 }
 
-/* --- 9. Animation d'Apparition au Scroll (Fade-In) --- */
+/* --- FOOTER --- */
+.footer {
+    padding: 40px 0;
+    background-color: var(--bg-main);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-right {
+    display: flex;
+    gap: 20px;
+}
+
+.social-link {
+    color: var(--text-secondary);
+    transition: var(--transition-smooth);
+}
+
+.social-link:hover {
+    color: var(--accent);
+    transform: translateY(-3px);
+}
+
+
+/* --- ANIMATIONS GLOBALES --- */
+
+/* Fade In simple au chargement */
 .fade-in {
+    animation: fadeIn 1s ease-out forwards;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- 10. Responsive Design --- */
+/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-        padding: 15px 5%;
+    .header-content {
+        flex-wrap: wrap;
     }
-    /* Maintien du bouton de thème à droite si possible ou sur une nouvelle ligne */
-    .navbar nav ul {
-        margin-top: 10px;
-        flex-wrap: wrap; 
+    .nav {
+        order: 3;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .nav-list {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    .theme-btn {
+        margin-left: auto;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+    .hero-buttons {
         justify-content: center;
     }
-
-    .navbar nav ul li {
-        margin: 0 10px 5px 10px;
+    .title-large {
+        font-size: 2.5rem;
     }
-
-    .hero-section {
-        height: auto;
-        min-height: 60vh;
-        padding: 60px 5%;
+    .hero-description {
+        margin: 0 auto 40px;
     }
-
-    .hero-section h1 {
-        font-size: 2.5em;
-    }
-
-    h2 {
-        font-size: 2em;
-    }
-
-    .cv-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .contact-links {
-        display: flex;
+    
+    .footer-content {
         flex-direction: column;
-    }
-
-    .contact-button {
-        width: 100%;
-        margin: 10px 0;
+        gap: 20px;
+        text-align: center;
     }
 }
