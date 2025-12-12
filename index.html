@@ -3,413 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio & CV | Prénom Nom</title>
+    <title>Portfolio & CV Professionnel</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="style.css">
+
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        /* =========================================
-           1. DEFINITION DES COULEURS (Variables)
-           ========================================= */
-        :root {
-            /* VOS COULEURS EXACTES */
-            --color-dark: #1B1725;      /* Fond sombre */
-            --color-mid:  #534B62;      /* Carte sombre */
-            --color-light:#A499B3;      /* Texte clair */
-            
-            --white: #ffffff;
-            --off-white: #f4f4f5;
-            --black-text: #1a1a1a;
-        }
-
-        /* CONFIGURATION MODE SOMBRE (Par défaut) */
-        body {
-            /* Affectation des variables pour le mode sombre */
-            --bg-main: var(--color-dark);
-            --bg-card: var(--color-mid);
-            --text-primary: var(--white);
-            --text-secondary: var(--color-light);
-            --accent: var(--color-light);
-            --border-color: rgba(164, 153, 179, 0.1);
-            --btn-bg: var(--color-mid);
-            --btn-text: var(--white);
-            --btn-border: var(--color-light);
-        }
-
-        /* CONFIGURATION MODE CLAIR (S'active via la classe .light-mode) */
-        body.light-mode {
-            --bg-main: var(--off-white);
-            --bg-card: var(--white);
-            --text-primary: var(--color-dark);      /* Texte foncé sur fond clair */
-            --text-secondary: var(--color-mid);
-            --accent: var(--color-mid);
-            --border-color: rgba(83, 75, 98, 0.2);
-            --btn-bg: var(--color-dark);
-            --btn-text: var(--white);
-            --btn-border: var(--color-dark);
-        }
-
-        /* =========================================
-           2. STYLE GLOBAL (RESET)
-           ========================================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            /* Transition douce pour le changement de couleur */
-            transition: background-color 0.3s ease, color 0.3s ease;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
-        img { max-width: 100%; display: block; }
-
-        .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* =========================================
-           3. HEADER & NAVIGATION
-           ========================================= */
-        header {
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            background-color: var(--bg-main); /* Cache le contenu qui défile dessous */
-            z-index: 100;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .nav-link {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--text-primary);
-        }
-
-        /* BOUTON SWITCH THEME */
-        .theme-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .theme-btn:hover {
-            border-color: var(--accent);
-            transform: scale(1.05);
-        }
-
-        /* Logique d'affichage des icônes Soleil/Lune */
-        .icon-sun { display: none; } /* Caché par défaut en mode sombre */
-        .icon-moon { display: block; }
-
-        body.light-mode .icon-sun { display: block; }
-        body.light-mode .icon-moon { display: none; }
-
-        /* =========================================
-           4. SECTION HERO (Introduction)
-           ========================================= */
-        .hero {
-            flex: 1; /* Prend l'espace disponible */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 0;
-        }
-
-        .hero-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        /* Animation d'apparition */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-text h1 {
-            font-size: 3rem;
-            line-height: 1.1;
-            margin-bottom: 15px;
-        }
-        
-        .highlight {
-            color: var(--accent);
-        }
-
-        .hero-text h2 {
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: var(--text-secondary);
-            margin-bottom: 25px;
-        }
-
-        .hero-text p {
-            color: var(--text-secondary);
-            margin-bottom: 30px;
-            max-width: 90%;
-        }
-
-        /* Boutons d'action */
-        .btn-group {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .btn-primary {
-            background-color: var(--btn-bg);
-            color: var(--btn-text);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--btn-border);
-            color: var(--text-primary);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        /* Image Hero */
-        .hero-img-container {
-            position: relative;
-        }
-        
-        .hero-img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 12px;
-            margin: 0 auto;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        /* =========================================
-           5. SECTION CATEGORIES
-           ========================================= */
-        .categories-section {
-            padding: 60px 0 100px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 1.8rem;
-        }
-
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background-color: var(--bg-card);
-            padding: 35px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: block; /* Pour que le lien englobe tout */
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-        }
-
-        .card-icon {
-            color: var(--accent);
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: var(--white); /* Titre carte toujours blanc/clair selon le bg */
-        }
-        
-        /* Ajustement specifique: en mode Light, le fond carte est blanc, donc le texte doit etre foncé */
-        body.light-mode .card h3 {
-            color: var(--color-dark);
-        }
-        body.light-mode .card p {
-            color: var(--color-mid);
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            color: var(--color-light); /* Texte clair par défaut sur carte sombre */
-            margin-bottom: 20px;
-        }
-
-        .card-link-text {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        body.light-mode .card-link-text {
-            color: var(--color-dark);
-        }
-
-        /* =========================================
-           6. FOOTER
-           ========================================= */
-        footer {
-            padding: 30px 0;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        /* =========================================
-           7. RESPONSIVE MOBILE
-           ========================================= */
-        @media (max-width: 768px) {
-            .hero-layout {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 40px;
-            }
-            
-            .hero-text p {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .btn-group {
-                justify-content: center;
-            }
-
-            .nav-menu {
-                display: none; /* Simplification pour mobile */
-            }
-        }
-    </style>
 </head>
 
 <body>
 
     <header>
-        <div class="container header-content">
+        <div class="container nav-bar">
             <a href="#" class="logo">Prénom Nom.</a>
             
-            <nav class="nav-menu">
-                <a href="cv.html" class="nav-link">Mon CV</a>
-                <a href="portfolio.html" class="nav-link">Portfolio</a>
+            <nav class="nav-links">
+                <a href="#about">À Propos</a>
+                <a href="cv.html">Mon CV</a>
+                <a href="portfolio.html">Portfolio</a>
             </nav>
 
-            <button class="theme-btn" id="themeToggle" aria-label="Changer le thème">
+            <button id="themeBtn" class="theme-toggle" aria-label="Changer le thème">
                 <i data-lucide="sun" class="icon-sun"></i>
                 <i data-lucide="moon" class="icon-moon"></i>
             </button>
         </div>
     </header>
 
-    <main class="hero">
-        <div class="container hero-layout">
-            
-            <div class="hero-text fade-in-up">
-                <h1>Bonjour, je suis <br><span class="highlight">Prénom Nom</span></h1>
-                <h2>Titre Professionnel (ex: Designer & Développeur)</h2>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-                </p>
-                <div class="btn-group">
-                    <a href="#categories" class="btn btn-primary">Mon Travail</a>
-                    <a href="mailto:email@exemple.com" class="btn btn-outline">Me Contacter</a>
+    <main>
+        
+        <section class="hero">
+            <div class="container hero-content">
+                
+                <div class="hero-text fade-in">
+                    <h1>Bonjour, je suis <br><span class="text-accent">Prénom Nom</span></h1>
+                    <h2>Développeur & Créatif (Votre Titre)</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                    </p>
+                    <div class="btn-group">
+                        <a href="portfolio.html" class="btn btn-primary">Voir mes projets <i data-lucide="arrow-right" style="width:18px;"></i></a>
+                        <a href="cv.html" class="btn btn-secondary">Mon CV</a>
+                    </div>
+                </div>
+
+                <div class="hero-image-wrapper fade-in delay-1">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80" alt="Portrait Professionnel" class="hero-img">
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section-categories fade-in delay-2">
+            <div class="container">
+                <h2 class="section-title">Mon Parcours</h2>
+
+                <div class="grid-cards">
+                    
+                    <a href="cv.html" class="card">
+                        <div class="card-icon">
+                            <i data-lucide="file-text" size="40"></i>
+                        </div>
+                        <h3>Curriculum Vitae</h3>
+                        <p>
+                            Consultez mon parcours détaillé, mes compétences techniques, mes formations et mes expériences professionnelles passées.
+                        </p>
+                        <span class="link-arrow">Ouvrir le CV <i data-lucide="chevron-right"></i></span>
+                    </a>
+
+                    <a href="portfolio.html" class="card">
+                        <div class="card-icon">
+                            <i data-lucide="briefcase" size="40"></i>
+                        </div>
+                        <h3>Porte-folio</h3>
+                        <p>
+                            Explorez une galerie de mes réalisations, études de cas clients et projets personnels. Lorem ipsum dolor sit.
+                        </p>
+                        <span class="link-arrow">Voir la galerie <i data-lucide="chevron-right"></i></span>
+                    </a>
+
                 </div>
             </div>
+        </section>
 
-            <div class="hero-img-container fade-in-up delay-2">
-                <img src="https://via.placeholder.com/400x500/534B62/FFFFFF?text=Votre+Photo" alt="Portrait Professionnel" class="hero-img">
-            </div>
-
-        </div>
     </main>
 
-    <section id="categories" class="categories-section">
-        <div class="container fade-in-up delay-3">
-            <h2 class="section-title">Explorer mon parcours</h2>
-            
-            <div class="cards-container">
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Prénom Nom. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
