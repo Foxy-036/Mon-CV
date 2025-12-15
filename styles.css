@@ -1,8 +1,8 @@
 /* --- 1. Réinitialisation et Polices --- */
 :root {
-    --color-primary: #2B82B2; /* Bleu Principal (vif mais professionnel) */
-    --color-secondary: #CDD3D5; /* Bleu foncé pour les actions/hover */
-    --color-dark: #30225A; /* Bleu très foncé/Noir (texte) */
+    --color-primary: #034078; /* Bleu Principal (vif mais professionnel) */
+    --color-secondary: #001F54; /* Bleu foncé pour les actions/hover */
+    --color-dark: #0A1128; /* Bleu très foncé/Noir (texte) */
     --color-light: #FFE7CD; /* Gris très clair (fond alterné) */
     --color-white: #ffffff; /* Blanc */
     --font-family: 'Roboto', sans-serif;
