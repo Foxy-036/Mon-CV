@@ -4,7 +4,7 @@
     --color-secondary: #001F54; /* Bleu foncé pour les actions/hover */
     --color-dark: #0A1128; /* Bleu très foncé/Noir (texte) */
     --color-light: #FFE7CD; /* Gris très clair (fond alterné) */
-    --color-white: #ffffff; /* Blanc */
+    --color-white: #FEFCFB; /* Blanc */
     --font-family: 'Roboto', sans-serif;
     --transition-duration: 0.3s;
 }
